@@ -5,7 +5,7 @@ from flask import Flask, request, redirect, url_for, jsonify
 app = Flask(__name__)
 
 
-@app.route('/upload', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
         file = request.files['file']
@@ -19,6 +19,10 @@ def upload_file():
             fen = retFEN(prediction)
             pprint(fen_to_board(fen))
             
+            whiteResult = 'Best white move: ' + calculateBestMove(fen, 'w')
+            blackResult = 'Best black move: ' + calculateBestMove(fen, 'b')
+            print(whiteResult)
+            print(blackResult)
             template = ""
             for count, s in enumerate(squares, 0):
                 if count % 8 == 0:
@@ -26,7 +30,8 @@ def upload_file():
                 base64img = uint8ToBase64(s)
                 template += "<img src=" + base64img + \
                     " style='margin: 0px 2px;' width=64 height=64>"
-
+            template += '<h1>' + whiteResult + '</h1>'
+            template += '<h1>' + blackResult + '</h1>'
             return '''
             <!doctype html>
             <title>Chess Mind</title>''' + template

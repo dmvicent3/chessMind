@@ -8,6 +8,8 @@ from base64 import b64encode
 import io
 from PIL import Image
 from keras.models import load_model
+import chess
+import chess.engine
 
 ALLOWED_EXTENSIONS = set(['jpg', 'jpeg', 'JPG', 'JPEG'])
 
@@ -25,7 +27,7 @@ def findBoard(fname):
     # Canny edge detection
     edges = autoCanny(gray)
     #print(np.count_nonzero(edges) / float(gray.shape[0] * gray.shape[1]))
-    if np.count_nonzero(edges) / float(gray.shape[0] * gray.shape[1]) > 0.30: #0.015 by default
+    if np.count_nonzero(edges) / float(gray.shape[0] * gray.shape[1]) > 0.35: #0.015 by default
         print ('too many edges')
         return None
     
@@ -177,7 +179,7 @@ def uint8ToBase64(image):
 
 
 
-model = load_model('C:/Users\Daniel/Desktop/chessMind/model.h5')
+model = load_model('C:/Users/danie/OneDrive/Ambiente de Trabalho/VSCode/AI/chessMind/chessMind/model_digital.h5')
 
 def prepare_image(image, size=(224,224)):
    
@@ -210,6 +212,7 @@ def retFEN(pred_list):
     if sum_digits > 1:
         fen = fen[:(len(fen) - sum_digits)] + str(sum_digits) + ('D' * (sum_digits - 1))
     fen = fen.replace('D', '')
+    print(fen)
     return fen
 
 def fen_to_board(fen):
@@ -245,3 +248,28 @@ def predictImages(imgs):
         pred = category_reference[top_pred]
         pred_list.append(pred)
     return pred_list
+
+def calculateBestMove(fen, sideToPlay):
+
+    # Initialize the chess board using a FEN string
+    fen = fen + ' ' + sideToPlay + ' KQkq - 0 1'
+    board = chess.Board(fen)
+
+    # Create and configure the chess engine
+    engine = chess.engine.SimpleEngine.popen_uci("C:/Users/danie/OneDrive/Ambiente de Trabalho/VSCode/AI/chessMind/chessMind/stockfish_15.1_win_x64_avx2/stockfish-windows-2022-x86-64-avx2.exe")
+    engine.configure({"Threads": 1})
+
+    # Search for the best move
+    info = engine.analyse(board, chess.engine.Limit(time=0.1))
+    bestMove = info["pv"][0]
+
+    bestMoveStr = bestMove.uci()
+    pieceToMove = bestMoveStr[:2]
+    postion = bestMoveStr[2:]
+
+    result = "Move " + pieceToMove + " to " + postion
+    # Close the engine
+    engine.quit()
+    
+    return result
+    
