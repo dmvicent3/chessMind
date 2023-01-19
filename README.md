@@ -11,4 +11,4 @@ Dependencies:
   - cv2
   - scipy
   - python-chess
-
+  - https://stockfishchess.org/download/
