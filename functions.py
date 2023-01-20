@@ -179,7 +179,7 @@ def uint8ToBase64(image):
 
 
 
-model = load_model('C:/Users/danie/OneDrive/Ambiente de Trabalho/VSCode/AI/chessMind/chessMind/model_digital.h5')
+model = load_model('C:/Users/Daniel/Desktop/VSCode/chessMind/model_digital.h5')
 
 def prepare_image(image, size=(224,224)):
    
@@ -249,20 +249,20 @@ def predictImages(imgs):
         pred_list.append(pred)
     return pred_list
 
-def calculateBestMove(fen, sideToPlay):
+def calculateBestMove(fen, lastSideToPlay):
 
     # Initialize the chess board using a FEN string
-    fen = fen + ' ' + sideToPlay + ' KQkq - 0 1'
+    fen = fen + ' ' + lastSideToPlay + ' KQkq - 0 1'
     board = chess.Board(fen)
 
     # Create and configure the chess engine
-    engine = chess.engine.SimpleEngine.popen_uci("C:/Users/danie/OneDrive/Ambiente de Trabalho/VSCode/AI/chessMind/chessMind/stockfish_15.1_win_x64_avx2/stockfish-windows-2022-x86-64-avx2.exe")
+    engine = chess.engine.SimpleEngine.popen_uci("C:/Users/Daniel/Desktop/VSCode/chessMind/stockfish_15.1_win_x64_avx2/stockfish-windows-2022-x86-64-avx2.exe")
     engine.configure({"Threads": 1})
 
     # Search for the best move
-    info = engine.analyse(board, chess.engine.Limit(time=0.1))
+    info = engine.analyse(board, chess.engine.Limit(time=0.5))
     bestMove = info["pv"][0]
-
+    print(bestMove)
     bestMoveStr = bestMove.uci()
     pieceToMove = bestMoveStr[:2]
     postion = bestMoveStr[2:]

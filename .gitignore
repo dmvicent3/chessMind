@@ -2,3 +2,6 @@
 /data/train
 /env
 model.h5
+stockfish_15.1_win_x64_avx2
+model_digital.h5
+data-chesscom

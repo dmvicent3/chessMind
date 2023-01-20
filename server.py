@@ -16,11 +16,9 @@ def upload_file():
                 return jsonify({'error': 'could not find board'})
             squares = segmentBoard(board)
             prediction = predictImages(squares)
-            fen = retFEN(prediction)
-            pprint(fen_to_board(fen))
-            
-            whiteResult = 'Best white move: ' + calculateBestMove(fen, 'w')
-            blackResult = 'Best black move: ' + calculateBestMove(fen, 'b')
+            fen = retFEN(prediction)            
+            whiteResult = 'Best white move: ' + calculateBestMove(fen, 'b')
+            blackResult = 'Best black move: ' + calculateBestMove(fen, 'w')
             print(whiteResult)
             print(blackResult)
             template = ""

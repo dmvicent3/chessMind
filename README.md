@@ -9,6 +9,8 @@ MODEL DIGITAL - https://drive.google.com/file/d/1waDJ18rYrJ1c5FsYOTnkX7k661jpdLj
 Dependencies:
   - numpy
   - cv2
+  - pillow
   - scipy
   - python-chess
+  - tensorflow
   - https://stockfishchess.org/download/
