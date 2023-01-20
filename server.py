@@ -4,7 +4,6 @@ from flask import Flask, request, redirect, url_for, jsonify
 
 app = Flask(__name__)
 
-
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
@@ -40,8 +39,8 @@ def upload_file():
     <title>Chess Mind</title>
     <h1>Upload board picture</h1>
     <form action="" method=post enctype=multipart/form-data>
-      <p><input type=file name=file>
-         <input type=submit value=Upload>
+        <input type=file name=file>
+        <input type=submit value=Upload>
     </form>
     '''
     
