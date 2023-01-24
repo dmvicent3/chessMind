@@ -178,9 +178,6 @@ def uint8ToBase64(image):
     return "data:image/jpeg;base64,"+b64encode(rawBytes.getvalue()).decode('ascii')
 
 
-
-model = load_model('C:/Users/Daniel/Desktop/VSCode/chessMind/model_digital.h5')
-
 def prepare_image(image, size=(224,224)):
    
     #image = cv2.resize(image, size)
@@ -235,6 +232,8 @@ def fen_to_board(fen):
 
         board.append( brow )
     return board
+
+model = load_model('C:/Users/Daniel/Desktop/VSCode/chessMind/model_digital.h5')
 
 def predictImages(imgs):
     category_reference = {0: 'b', 1: 'k', 2: 'n', 3: 'p', 4: 'q', 5: 'r', 6: '1', 7: 'B', 8: 'K', 9: 'N', 10: 'P',
